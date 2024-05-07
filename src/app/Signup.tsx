@@ -1,6 +1,35 @@
+"use client"
+
 import Link from "next/link";
+import { useState, useRef, useEffect  } from "react";
 
 export default function Signup() {
+
+  const [otp, setOtp] = useState<string[]>(Array(8).fill(""));
+  const refs = Array(8).fill(0).map(() => useRef<HTMLInputElement>(null));
+
+  const handleOtpChange = (index: number, value: string) => {
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    if (value !== "" && index < 7) {
+      refs[index + 1].current?.focus();
+    }
+  };
+
+  const handleKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Backspace" && index > 0 && otp[index] === "") {
+      refs[index - 1].current?.focus();
+    }
+  };
+  useEffect(() => {
+    const filledOtp = otp.join("");
+    console.log(filledOtp)
+    if (filledOtp.length === 8) {
+      console.log("OTP entered:", filledOtp);
+    }
+  }, [otp]);
+
   return (
     <div className="flex items-center justify-center h-screen">
       
@@ -32,14 +61,32 @@ export default function Signup() {
       </div>
       <div className="m-5 flex items-center justify-center h/2-screen">
       <div className="w-116 p-8 border border-gray-300 rounded-xl">
-      <h1 className="text-2xl font-bold mb-4 flex items-center justify-center">Verify your Email</h1>
+      <h1 className="text-3xl font-bold mb-4 flex items-center justify-center">Verify your email</h1>
 
-      <h3 className="text-sm mb-4 flex items-center justify-center">Enter the 8 digit code you recieved on</h3>
+      <h3 className="flex items-center justify-center">Enter the 8 digit code you have recieved on</h3>
       
-      <h3 className=" font-bold text-sm mb-4 flex items-center justify-center">ankush***@gmail.com</h3>
-      <h2 className="text-sm mb-4 flex items-center justify-start">Code</h2>
-      <button type="submit" className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800">Verify
-      </button>
+      <h3 className=" font-bold text-sm mb-8 flex items-center justify-center">ankush***@gmail.com</h3>
+      <h2 className="text-black flex items-center justify-start">&nbsp;Code</h2>
+
+      <form>
+          <div className="flex justify-center mb-12">
+            {otp.map((value, index) => (
+              <input
+                key={index}
+                ref={refs[index]}
+                type="text"
+                maxLength={1}
+                value={value}
+                onChange={(e) => handleOtpChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                className="w-10 h-10 m-1 text-center border border-gray-300 rounded-md"
+              />
+            ))}
+          </div>
+          <div className="flex justify-center">
+            <button type="submit" className="w-full py-2 px-4 border bg-black border-black text-white rounded-md hover:bg-gray-800 hover:text-white">VERIFY</button>
+          </div>
+        </form>
       </div>
       </div>
     </div>
