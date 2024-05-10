@@ -21,7 +21,7 @@ export default function Categories() {
     return (
         <>
         <Header/>
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h/2-screen m-9">
             <div className="w-996 p-8 border border-gray-300 rounded-2xl">
                 <h1 className="text-2xl font-bold mb-4 flex items-center justify-center">
                     Please mark your interests!
@@ -86,8 +86,26 @@ export default function Categories() {
         </>
 
     );
+
+    
 }
 
+
+// I am using t3 stack i.e. next, typescript, prisma, trpc and mysql as db .
+// Here is my folder structure : 
+// ----prisma
+// ----src 
+//         -----app 
+//                 ---- components
+//                 ---- api
+                
+//         -----server
+//                     ---- api
+//         -----trpc
+
+//         Here is my Signup.tsx make the api for signup and also apply that api on this tsx file
+        
+        
 // pages/categories.tsx
 // "use client"
 // import { api } from "~/trpc/server";
