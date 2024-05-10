@@ -2,14 +2,30 @@
 import { useState, useRef, useEffect } from "react";
 import { Header } from "../_components/header";
 import Link from "next/link";
+import { signup } from '../api/signup';
 
 export default function Signup() {
-  const [showVerifyEmail, setShowVerifyEmail] = useState(false); // State to control visibility of verify email section
+  const [showVerifyEmail, setShowVerifyEmail] = useState(false);
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+
+  // const handleSignup = async () => {
+  //   try {
+  //     const response = await signup({ name, email, password });
+  //     if (response.success) {
+  //       setShowVerifyEmail(true);
+  //     } else {
+  //       console.error('Signup failed:', response.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Signup error:', error);
+  //   }
+  // };
 
   const [otp, setOtp] = useState<string[]>(Array(8).fill(""));
   const refs = Array(8)
-    .fill(0)
-    .map(() => useRef<HTMLInputElement>(null));
+    .fill(0)?.map(() => useRef<HTMLInputElement>(null));
 
   const handleOtpChange = (index: number, value: string) => {
     const newOtp = [...otp];
@@ -36,6 +52,8 @@ export default function Signup() {
       console.log("OTP entered:", filledOtp);
     }
   }, [otp]);
+
+
 
   return (
     <>
@@ -96,7 +114,7 @@ export default function Signup() {
               <button
                 type="button"
                 className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
-                onClick={() => setShowVerifyEmail(true)} // Show verify email section on button click
+                onClick={() => setShowVerifyEmail(true)} 
               >
                 CREATE ACCOUNT
               </button>
@@ -111,7 +129,6 @@ export default function Signup() {
         </div>
         )}
 
-        {/* Conditionally render verify email section */}
         {showVerifyEmail && (
           <div className="m-5 flex items-center justify-center h/2-screen">
             <div className="w-116 p-8 border border-gray-300 rounded-xl">
@@ -132,7 +149,7 @@ export default function Signup() {
 
               <form>
                 <div className="flex justify-center mb-12">
-                  {otp.map((value, index) => (
+                  {otp?.map((value, index) => (
                     <input
                       key={index}
                       ref={refs[index]}
