@@ -1,11 +1,12 @@
-
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '/lib/prisma'; 
+import { PrismaClient, Category } from '@prisma/client'; 
+
+const prisma = new PrismaClient(); 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const categories = await prisma.category.findMany();
+      const categories: Category[] = await prisma.category.findMany();
       console.log("----",categories)
       res.status(200).json(categories);
     } catch (error) {

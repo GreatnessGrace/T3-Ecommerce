@@ -6,7 +6,6 @@ import { Header } from "~/app/_components/header";
 import Categories from "./Categories";
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
-
   return (
     <>
     <Header/>
@@ -55,7 +54,8 @@ export default async function Home() {
 
 async function CrudShowcase() {
   const latestPost = await api.post.getLatest();
- 
+  const cate = await api.categories.getCategories();
+
 
   return (
     <div className="w-full max-w-xs">
